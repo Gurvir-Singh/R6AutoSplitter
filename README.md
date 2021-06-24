@@ -3,6 +3,9 @@
 
 ## Getting Started
 
+### Note
+This only works with the DirectX version of Siege. Vulkan does not work. 
+
 ### Opening the app
 As of right now to open the application go into the R6AutoSplitter/Debug folder then run the .exe 
 or
