@@ -10,3 +10,12 @@ C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\obj\Debug\R6AutoSplitt
 C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\bin\Debug\System.Drawing.Common.dll
 C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\obj\Debug\R6AutoSplitter.csproj.CopyComplete
 C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\obj\Debug\R6AutoSplitter.Form1.resources
+C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\bin\Debug\SharpDX.Direct3D11.dll
+C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\bin\Debug\SharpDX.dll
+C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\bin\Debug\SharpDX.DXGI.dll
+C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\bin\Debug\SharpDX.pdb
+C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\bin\Debug\SharpDX.Direct3D11.pdb
+C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\bin\Debug\SharpDX.Direct3D11.xml
+C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\bin\Debug\SharpDX.DXGI.pdb
+C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\bin\Debug\SharpDX.DXGI.xml
+C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\obj\Debug\R6AutoSplitter.DebuggerWindow.resources

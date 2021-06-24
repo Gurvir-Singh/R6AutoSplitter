@@ -39,6 +39,7 @@ namespace R6AutoSplitter
             this.AllTerroristHuntsButton = new System.Windows.Forms.RadioButton();
             this.runningText = new System.Windows.Forms.Label();
             this.timer = new System.Windows.Forms.Timer(this.components);
+            this.debugButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // StartButton
@@ -128,11 +129,23 @@ namespace R6AutoSplitter
             this.timer.Interval = 1000;
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
+            // debugButton
+            // 
+            this.debugButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.debugButton.Location = new System.Drawing.Point(466, 323);
+            this.debugButton.Name = "debugButton";
+            this.debugButton.Size = new System.Drawing.Size(87, 35);
+            this.debugButton.TabIndex = 7;
+            this.debugButton.Text = "debug";
+            this.debugButton.UseVisualStyleBackColor = true;
+            this.debugButton.Click += new System.EventHandler(this.debugButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(565, 370);
+            this.Controls.Add(this.debugButton);
             this.Controls.Add(this.runningText);
             this.Controls.Add(this.AllTerroristHuntsButton);
             this.Controls.Add(this.AllSituationsButton);
@@ -162,6 +175,7 @@ namespace R6AutoSplitter
         private System.Windows.Forms.RadioButton AllTerroristHuntsButton;
         private System.Windows.Forms.Label runningText;
         private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.Button debugButton;
     }
 }
 

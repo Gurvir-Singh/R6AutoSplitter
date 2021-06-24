@@ -15,6 +15,8 @@ namespace R6AutoSplitter
 {
     public partial class Form1 : Form
     {
+        private DebuggerWindow debugViewer;
+
         private int _timeToStart = 10;
         private SplitType _type = SplitType.Situations;
         public Form1()
@@ -101,8 +103,10 @@ namespace R6AutoSplitter
 
         }
 
-        
-
-        
+        private void debugButton_Click(object sender, EventArgs e)
+        {
+            debugViewer = new DebuggerWindow();
+            debugViewer.Show();
+        }
     }
 }
