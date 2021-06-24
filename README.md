@@ -21,4 +21,4 @@ Right now the in order for it to work with livesplit you split key needs to be t
 As of right now only thunt works correctly. All thunts is buggy and the two situation options do nothing past the countdown.
 
 ### Incorrect Splitting
-Sometimes the split starts right after the countdown and stops 1 second in. To fix this you have to restard your game. I think this is because the game for whatever reason sometimes puts up a directX surface that goes straight to your graphics processer. The Splitter uses windows capture tools which bug out completley when dealing with directX surfaces. This is probably the worst bug rn
+Sometimes the split starts right after the countdown and stops 1 second in. Enabling V-Sync fixes this. The reason is because without vsync on the gpu is constantly updating the frame buffer and it results in the bmp being corrupted and the split starting at the wrong time. I have yet to find a workaround for this but i think the key is to use directX
