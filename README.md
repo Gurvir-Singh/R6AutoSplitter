@@ -1,11 +1,11 @@
 # R6AutoSplitter
 
-
-## Getting Started
-
-### Note
+## Info
+This is the C# branch of the program. The most stable and recommended version of the program on the main branch. 
 This only works with the DirectX version of Siege. Vulkan does not work. 
 You also must have V-Sync enabled. 1 or 2 frames works. As of right now it also only works with 1080p 16:9 displays.
+
+## Getting Started
 
 ### Opening the app
 As of right now to open the application go into the R6AutoSplitter/Debug folder then run the .exe 
@@ -14,7 +14,6 @@ Open the project in visual studio with the .sln file and build and run it yourse
 
 ### Working with livesplit
 Right now in order for it to work with livesplit your split key needs to be tilde (~) and your pause key needs to be end. 
-
 
 ## Issues/Missing Features
 
