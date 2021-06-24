@@ -47,16 +47,37 @@ namespace R6AutoSplitter
             Graphics gfxScreenshot = Graphics.FromImage(bmpScreenshot);
             System.Drawing.Color CurrentPixelColor;
             //Runs while the pixel's Color is close to white. Cant just compare to white because sometimes its a bit darker
+            bool ScreenDark = false;
+            bool CinematicShowing = false;
             do
             {
                 //gets a pixel from the r6 loading icon
                 gfxScreenshot.CopyFromScreen(0, 0, 0, 0, new Size(1920, 1080), CopyPixelOperation.SourceCopy);
-                CurrentPixelColor = bmpScreenshot.GetPixel(0, 200);
-
-            } while (CurrentPixelColor.R + CurrentPixelColor.G + CurrentPixelColor.B > 12);
+                if (bmpScreenshot.GetPixel(0, 200).GetBrightness() < 0.1)
+                {
+                    ScreenDark = true;
+                }
+                else
+                {
+                    ScreenDark = false;
+                }
+                if ((bmpScreenshot.GetPixel(1749, 982).GetBrightness() > 0.1 || bmpScreenshot.GetPixel(124, 986).GetBrightness() > 0.1))
+                {
+                    
+                    CinematicShowing = true;
+                }
+                else
+                {
+                    CinematicShowing = false;
+                    linesToLog.Add(bmpScreenshot.GetPixel(1749, 982).GetBrightness().ToString());
+                    linesToLog.Add(bmpScreenshot.GetPixel(124, 986).GetBrightness().ToString());
+                }
+                
+            } while (CinematicShowing);
+            
             bmpScreenshot.Save("DegubStart.bmp", ImageFormat.Bmp);
 
-            linesToLog.Add(CurrentPixelColor.R + ", " + CurrentPixelColor.G + ", " + CurrentPixelColor.B);
+            //linesToLog.Add(CurrentPixelColor.R + ", " + CurrentPixelColor.G + ", " + CurrentPixelColor.B);
 
             //Splits on livesplit
             SendKeys.SendWait("{PGUP}");
@@ -82,9 +103,10 @@ namespace R6AutoSplitter
 
         public static int SplitAllSituations()
         {
-            int returnCode = ScreenScrapper.SplitSituations();
+            SplitSituations();
+            Thread.Sleep(500);
             SendKeys.SendWait("{END}");
-            return returnCode;
+            return 0;
         }
 
         public static int SplitTerroristHunt()
