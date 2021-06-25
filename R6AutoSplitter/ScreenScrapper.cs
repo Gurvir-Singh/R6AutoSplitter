@@ -16,135 +16,50 @@ namespace R6AutoSplitter
     public enum SplitType
     {
         Situations,
-        AllSituations,
         TerroristHunt,
-        AllTerroristHunts,
     }
     public class ScreenScrapper
     {
-        public static int Split(SplitType type)
+        public static void Split(bool pauseAfterSplit)
         {
-            switch (type)
-            {
-                case SplitType.Situations:
-                    return SplitSituations();
-                case SplitType.AllSituations:
-                    return SplitAllSituations();
-                case SplitType.TerroristHunt:
-                    return SplitTerroristHunt();
-                case SplitType.AllTerroristHunts:
-                    return SplitAllTerroristHunts();
-            }
-            return 1;
-        }
-        public static int SplitSituations()
-        {
-            List<string> linesToLog = new List<string>();
-            linesToLog.Add(DateTime.Now.ToString());
             int length = 1;
             //Square bitmap of size "length" squared
             Bitmap bmpScreenshot = new Bitmap(length, length, PixelFormat.Format32bppArgb);
             Graphics gfxScreenshot = Graphics.FromImage(bmpScreenshot);
-            System.Drawing.Color CurrentPixelColor;
-            //Runs while the pixel's Color is close to white. Cant just compare to white because sometimes its a bit darker
-            bool ScreenDark = false;
-            bool CinematicShowing = false;
+           
+            bool loadOrSkipIconShowing = false;
+            //This loop will break once the black fade in starts and the loading icon/skip button has dissapeared signalling the start of the thunt/situation
             do
             {
                 //gets a pixel from the r6 loading icon
-                gfxScreenshot.CopyFromScreen(0, 200, 0, 0, new Size(length, length), CopyPixelOperation.SourceCopy);
-                if (bmpScreenshot.GetPixel(0, 0).GetBrightness() < 0.1)
-                {
-                    ScreenDark = true;
-                }
-                else
-                {
-                    ScreenDark = false;
-                }
+                loadOrSkipIconShowing = false;
+                //This is a pixel of the skip button that appears during situation intro cutscenes. When it is visible the loading icon is not
                 gfxScreenshot.CopyFromScreen(1749, 982, 0, 0, new Size(length, length), CopyPixelOperation.SourceCopy);
-                float nextButtonBrightness = bmpScreenshot.GetPixel(0, 0).GetBrightness();
+                float skipButtonBrightness = bmpScreenshot.GetPixel(0, 0).GetBrightness();
+                //This is a pixel from the loading icon
                 gfxScreenshot.CopyFromScreen(124, 986, 0, 0, new Size(length, length), CopyPixelOperation.SourceCopy);
-                if (( nextButtonBrightness > 0.1 || bmpScreenshot.GetPixel(0, 0).GetBrightness() > 0.1))
+                float loadIconBrightness = bmpScreenshot.GetPixel(0, 0).GetBrightness(); ;
+                if ((skipButtonBrightness > 0.1 || loadIconBrightness > 0.1))
                 {
-                    
-                    CinematicShowing = true;
+                    loadOrSkipIconShowing = true;
                 }
-                else
-                {
-                    CinematicShowing = false;
-                    //linesToLog.Add(bmpScreenshot.GetPixel(1749, 982).GetBrightness().ToString());
-                    //linesToLog.Add(bmpScreenshot.GetPixel(124, 986).GetBrightness().ToString());
-                }
-                
-            } while (CinematicShowing);
-            
-            bmpScreenshot.Save("DegubStart.bmp", ImageFormat.Bmp);
 
-            //linesToLog.Add(CurrentPixelColor.R + ", " + CurrentPixelColor.G + ", " + CurrentPixelColor.B);
+            } while (loadOrSkipIconShowing);
+
 
             //Splits on livesplit
             SendKeys.SendWait("{PGUP}");
-            linesToLog.Add("started");
-            //Waites for a second so the fade in can complete so that the pixel used for the end split is white and not grey
-            Thread.Sleep(1000);
-            do
-            {
-                //gets a pixel from the top left corner of the operator icon 
-                gfxScreenshot.CopyFromScreen(709, 68, 0, 0, new Size(length, length), CopyPixelOperation.SourceCopy);
-                CurrentPixelColor = bmpScreenshot.GetPixel(0, 0);
 
-
-            } while (CurrentPixelColor.GetBrightness() > 0.9);
-            bmpScreenshot.Save("DegubEnd.bmp", ImageFormat.Bmp);
-            linesToLog.Add(CurrentPixelColor.R + ", " + CurrentPixelColor.G + ", " + CurrentPixelColor.B);
-            //Splits on livesplit
-            SendKeys.SendWait("{PGUP}");
-            linesToLog.Add("ended");
-            File.WriteAllLines("Log.txt", linesToLog);
-            return 0;
-        }
-
-        public static int SplitAllSituations()
-        {
-            SplitSituations();
-            Thread.Sleep(500);
-            SendKeys.SendWait("{END}");
-            return 0;
-        }
-
-        public static int SplitTerroristHunt()
-        {
-            
-            List<string> linesToLog = new List<string>();
-            linesToLog.Add(DateTime.Now.ToString());
-            int length = 1;
-            //Square bitmap of size "length" squared
-            Bitmap bmpScreenshot = new Bitmap(length, length, PixelFormat.Format32bppArgb);
-            Graphics gfxScreenshot = Graphics.FromImage(bmpScreenshot);
-            System.Drawing.Color CurrentPixelColor;
-            //Runs while the pixel's Color is close to white. Cant just compare to white because sometimes its a bit darker
-            do {
-                //gets a pixel from the r6 loading icon
-                gfxScreenshot.CopyFromScreen(124, 986, 0, 0, new Size(length, length), CopyPixelOperation.SourceCopy);
-                CurrentPixelColor = bmpScreenshot.GetPixel(0, 0);
-
-            } while (CurrentPixelColor.GetBrightness() > 0.9);
-            bmpScreenshot.Save("DegubStart.bmp", ImageFormat.Bmp);
-
-            linesToLog.Add(CurrentPixelColor.GetBrightness().ToString());
-
-            //Splits on livesplit
-            SendKeys.SendWait("{PGUP}");
-            linesToLog.Add("started");
-            //Waites for a second so the fade in can complete so that the pixel used for the end split is white and not grey
+            //Waites for a second so the fade in can complete so that the pixel we use for checking the end of the thunt is at its max brightness
             Thread.Sleep(1000);
 
             bool operatorIconVisible = true;
-            //had to check for this because in protect hostage theres a period after every wave where most of the ui including the operator icon disappears
-            //but not the bottom tray. Cant just use camera as ui check because its too incosistent and changes when you use it. The chances of you going on camera
-            //mid prepphase is low in a speedrun. This is a terrible way to do it but unfortunatly I cant think of a better way. Theres only so much I can do with the games ui
             bool KillFeedVisible = true;
             bool CameraVisible = true;
+            //had to check for the killfeed and camera because in protect hostage theres a period after every wave where most of the ui including the operator icon disappears
+            //but not the bottom tray and killfeed. So for that period I use the killfeed and camera icon. The killfeed is the better way but for the first couple frames
+            //I have to use the camera because the killfeed icons have to slide in from the right. The chances of you going on camera in the 6 frame window the killfeed is not
+            //in its final position is fairly low so this was a good enough solution for me.
             do
             {
                 CameraVisible = true;
@@ -156,11 +71,13 @@ namespace R6AutoSplitter
                 {
                     operatorIconVisible = false;
                 }
+                //gets a pixel from the bottom right corner of the killfeed
                 gfxScreenshot.CopyFromScreen(1754, 309, 0, 0, new Size(length, length), CopyPixelOperation.SourceCopy);
                 if (bmpScreenshot.GetPixel(0, 0).GetBrightness() > 0.1)
                 {
                     KillFeedVisible = false;
                 }
+                //gets a pixel from the camera icon
                 gfxScreenshot.CopyFromScreen(924, 991, 0, 0, new Size(length, length), CopyPixelOperation.SourceCopy);
                 if (bmpScreenshot.GetPixel(0, 0).GetBrightness() < 0.9)
                 {
@@ -168,24 +85,16 @@ namespace R6AutoSplitter
                 }
 
             } while (operatorIconVisible || KillFeedVisible || CameraVisible);
-            bmpScreenshot.Save("DegubEnd.bmp", ImageFormat.Bmp);
-            linesToLog.Add(CurrentPixelColor.R + ", " + CurrentPixelColor.G + ", " + CurrentPixelColor.B);
             //Splits on livesplit
             SendKeys.SendWait("{PGUP}");
-            linesToLog.Add("ended");
-            File.WriteAllLines("Log.txt", linesToLog);
-            return 0;
-            
+            if (pauseAfterSplit)
+            {
+                //shortest delay inbetween the two signals to live split that allows it to work consistently. 263 is the lowest it can be but the pause is not consistent below 300
+                Thread.Sleep(300);
+                SendKeys.SendWait("{END}");
+            }
         }
-        //same thing as one terrorist hunt but you have to pause afterwords so you can switch modes
-        public static int SplitAllTerroristHunts()
-        {
-            
-            SplitTerroristHunt();
-            Thread.Sleep(500);
-            SendKeys.SendWait("{END}");
-            return 0;
-        }
+        
 
 
     }

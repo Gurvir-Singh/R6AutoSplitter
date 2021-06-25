@@ -18,7 +18,7 @@ namespace R6AutoSplitter
         private DebuggerWindow debugViewer;
         private Thread _splitterThread;
         private int _timeToStart = 3;
-        private SplitType _type = SplitType.Situations;
+        
         private bool _running
         {
             get
@@ -36,9 +36,13 @@ namespace R6AutoSplitter
 
         public Form1()
         {
+            
             _splitterThread = new Thread(StartSplitter);
             InitializeComponent();
             Countdown.Text = _timeToStart.ToString();
+            Bitmap Logo = new Bitmap("C:\\Users\\chari\\Desktop\\R6ASLogo - Copy.png");
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.Image = Logo;
         }
 
         private void StartButton_Click(object sender, EventArgs e)
@@ -54,7 +58,7 @@ namespace R6AutoSplitter
             {
                 
                 timer.Stop();
-                runningText.Text = "currently running " + _type.ToString();
+                runningText.Text = "currently running";
                 runningText.Visible = true;
                 CheckForIllegalCrossThreadCalls = false;
                 _splitterThread = new Thread(StartSplitter);
@@ -70,47 +74,12 @@ namespace R6AutoSplitter
         private void StartSplitter()
         {
             runningText.Text = "currently running";
-            ScreenScrapper.Split(_type);
+            ScreenScrapper.Split(pauseAfterSplitCheckbox.Checked);
             runningText.Visible = false;
             Countdown.Text = _timeToStart.ToString();
             StopButton.Visible = false;
             StartButton.Visible = true;
         }
-
-        
-
-        private void SituationsButton_CheckedChanged(object sender, EventArgs e)
-        {
-            if (SituationsButton.Checked)
-            {
-                _type = SplitType.Situations;
-            }
-        }
-
-        private void AllSituationsButton_CheckedChanged(object sender, EventArgs e)
-        {
-            if (AllSituationsButton.Checked)
-            {
-                _type = SplitType.AllSituations;
-            }
-        }
-
-        private void TerroristHuntButton_CheckedChanged(object sender, EventArgs e)
-        {
-            if (TerroristHuntButton.Checked)
-            {
-                _type = SplitType.TerroristHunt;
-            }
-        }
-
-        private void AllTerroristHuntsButton_CheckedChanged(object sender, EventArgs e)
-        {
-            if (AllTerroristHuntsButton.Checked)
-            {
-                _type = SplitType.AllTerroristHunts;
-            }
-        }
-
 
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -134,7 +103,7 @@ namespace R6AutoSplitter
 
         }
 
-        private void debugButton_Click(object sender, EventArgs e)
+        private void settingsButton_Click(object sender, EventArgs e)
         {
             debugViewer = new DebuggerWindow();
             debugViewer.Show();
@@ -151,6 +120,11 @@ namespace R6AutoSplitter
             runningText.Visible = false;
             StopButton.Visible = false;
             StartButton.Visible = true;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
