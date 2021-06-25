@@ -114,7 +114,6 @@ namespace R6AutoSplitter
 
         public static int SplitTerroristHunt()
         {
-
             
             List<string> linesToLog = new List<string>();
             linesToLog.Add(DateTime.Now.ToString());

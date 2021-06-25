@@ -40,6 +40,7 @@ namespace R6AutoSplitter
             this.runningText = new System.Windows.Forms.Label();
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.debugButton = new System.Windows.Forms.Button();
+            this.StopButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // StartButton
@@ -117,11 +118,12 @@ namespace R6AutoSplitter
             // 
             this.runningText.AutoSize = true;
             this.runningText.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.runningText.Location = new System.Drawing.Point(191, 248);
+            this.runningText.Location = new System.Drawing.Point(192, 248);
             this.runningText.Name = "runningText";
             this.runningText.Size = new System.Drawing.Size(178, 26);
             this.runningText.TabIndex = 6;
             this.runningText.Text = "Currently running";
+            this.runningText.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.runningText.Visible = false;
             // 
             // timer
@@ -140,11 +142,24 @@ namespace R6AutoSplitter
             this.debugButton.UseVisualStyleBackColor = true;
             this.debugButton.Click += new System.EventHandler(this.debugButton_Click);
             // 
+            // StopButton
+            // 
+            this.StopButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StopButton.Location = new System.Drawing.Point(221, 65);
+            this.StopButton.Name = "StopButton";
+            this.StopButton.Size = new System.Drawing.Size(112, 39);
+            this.StopButton.TabIndex = 8;
+            this.StopButton.Text = "Stop";
+            this.StopButton.UseVisualStyleBackColor = true;
+            this.StopButton.Visible = false;
+            this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(565, 370);
+            this.Controls.Add(this.StopButton);
             this.Controls.Add(this.debugButton);
             this.Controls.Add(this.runningText);
             this.Controls.Add(this.AllTerroristHuntsButton);
@@ -176,6 +191,7 @@ namespace R6AutoSplitter
         private System.Windows.Forms.Label runningText;
         private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.Button debugButton;
+        private System.Windows.Forms.Button StopButton;
     }
 }
 

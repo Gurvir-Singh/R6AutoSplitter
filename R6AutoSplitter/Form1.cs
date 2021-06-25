@@ -16,37 +16,68 @@ namespace R6AutoSplitter
     public partial class Form1 : Form
     {
         private DebuggerWindow debugViewer;
-
+        private Thread _splitterThread;
         private int _timeToStart = 3;
         private SplitType _type = SplitType.Situations;
+        private bool _running
+        {
+            get
+            {
+                if (runningText.Visible)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
         public Form1()
         {
+            _splitterThread = new Thread(StartSplitter);
             InitializeComponent();
             Countdown.Text = _timeToStart.ToString();
         }
 
         private void StartButton_Click(object sender, EventArgs e)
         {
+            StartButton.Visible = false;
+            StopButton.Visible = true;
             timer.Start();
         }
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            if (Countdown.Text == "0")
+            if (Countdown.Text == "0" && !_running)
             {
+                
                 timer.Stop();
                 runningText.Text = "currently running " + _type.ToString();
                 runningText.Visible = true;
-                int returnCode = ScreenScrapper.Split(_type);
-                runningText.Visible = false;
-                runningText.Text = "currently running";
-                Countdown.Text = _timeToStart.ToString();
+                CheckForIllegalCrossThreadCalls = false;
+                _splitterThread = new Thread(StartSplitter);
+                _splitterThread.Start();
+                
             }
             else
             {
                 Countdown.Text = (Int32.Parse(Countdown.Text) - 1).ToString();
             }
         }
+
+        private void StartSplitter()
+        {
+            runningText.Text = "currently running";
+            ScreenScrapper.Split(_type);
+            runningText.Visible = false;
+            Countdown.Text = _timeToStart.ToString();
+            StopButton.Visible = false;
+            StartButton.Visible = true;
+        }
+
+        
 
         private void SituationsButton_CheckedChanged(object sender, EventArgs e)
         {
@@ -107,6 +138,19 @@ namespace R6AutoSplitter
         {
             debugViewer = new DebuggerWindow();
             debugViewer.Show();
+        }
+
+        private void StopButton_Click(object sender, EventArgs e)
+        {
+            timer.Stop();
+            Countdown.Text = _timeToStart.ToString();
+            if (_splitterThread.IsAlive)
+            {
+                //_splitterThread.Abort();
+            }
+            runningText.Visible = false;
+            StopButton.Visible = false;
+            StartButton.Visible = true;
         }
     }
 }
