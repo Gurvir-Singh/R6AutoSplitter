@@ -10,7 +10,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Microsoft.Win32;
+using SharpDX;
 namespace R6AutoSplitter
 {
     public partial class DebuggerWindow : Form
@@ -18,6 +19,7 @@ namespace R6AutoSplitter
         private Thread _renderThread;
         private bool _running;
         private object lockObject = new object();
+        private Bitmap picBoxImg = null;
         public DebuggerWindow()
         {
             InitializeComponent();
@@ -27,12 +29,31 @@ namespace R6AutoSplitter
             _renderThread.Start();
             //render();
         }
+        protected static IntPtr m_HBitmap;
+        private static int i = 0;
+        //[DllImport("U32.dll")]
+        private void bruh(object sender, Bitmap data) 
+        {
 
+            pictureBox1.Image = new Bitmap(data);
+        }
         private void render()
         {
 
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+
+
+            ScreenStateLogger cap = new ScreenStateLogger();
+            //cap.ScreenRefreshed += bruh;
+            cap.SS().Save("SS.bmp");
+            //cap.Start();
+
+            timer1.Interval = 100;
+            timer1.Start();
+
+            /*
             Bitmap debugSS = new Bitmap(1920, 1080, PixelFormat.Format32bppArgb);
+            
             Graphics debugGFX = Graphics.FromImage(debugSS);
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
@@ -57,12 +78,27 @@ namespace R6AutoSplitter
                 }));
             }
             stopWatch.Stop();
+            */
         }
 
         private void stopButton_Click(object sender, EventArgs e)
         {
             _running = false;
+            Thread.Sleep(2000);
             
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            ScreenStateLogger cap = new ScreenStateLogger();
+            pictureBox1.Image = cap.SS();
+
+
         }
     }
 }

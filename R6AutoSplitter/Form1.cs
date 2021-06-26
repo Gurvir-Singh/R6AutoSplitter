@@ -17,7 +17,7 @@ namespace R6AutoSplitter
     {
         private AspectRatioDefinitions.AspectRatio AspectRatio;
         private DebuggerWindow debugViewer;
-        private Thread _splitterThread;
+        private Thread _splitterThread = null;
         private int _timeToStart = 3;
         private SettingsWindow settingsWindow = null;
         private bool _running
@@ -74,7 +74,7 @@ namespace R6AutoSplitter
         private void StartSplitter()
         {
             runningText.Text = "currently running";
-            ScreenScrapper.Split(pauseAfterSplitCheckbox.Checked, AspectRatioDefinitions.AspectRatio.FiveByFour);
+            Splitter.Split(pauseAfterSplitCheckbox.Checked, AspectRatioDefinitions.AspectRatio.SixteenByNine);
             runningText.Visible = false;
             Countdown.Text = _timeToStart.ToString();
             StopButton.Visible = false;
@@ -105,10 +105,7 @@ namespace R6AutoSplitter
 
         private void settingsButton_Click(object sender, EventArgs e)
         {
-            if (settingsWindow == null)
-            {
-                settingsWindow = new SettingsWindow(this);
-            }
+            settingsWindow = new SettingsWindow(this);
             settingsWindow.Show();
             this.Hide();
         }
@@ -119,7 +116,7 @@ namespace R6AutoSplitter
             Countdown.Text = _timeToStart.ToString();
             if (_splitterThread.IsAlive)
             {
-                //_splitterThread.Abort();
+                _splitterThread.Abort();
             }
             runningText.Visible = false;
             StopButton.Visible = false;
@@ -129,6 +126,14 @@ namespace R6AutoSplitter
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (_splitterThread != null && _splitterThread.IsAlive)
+            {
+                _splitterThread.Abort();
+            }
         }
     }
 }

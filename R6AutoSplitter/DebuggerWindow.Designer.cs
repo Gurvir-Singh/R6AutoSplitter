@@ -29,9 +29,11 @@ namespace R6AutoSplitter
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.fpsLabel = new System.Windows.Forms.Label();
             this.stopButton = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -42,6 +44,7 @@ namespace R6AutoSplitter
             this.pictureBox1.Size = new System.Drawing.Size(1280, 720);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // fpsLabel
             // 
@@ -64,6 +67,10 @@ namespace R6AutoSplitter
             this.stopButton.UseVisualStyleBackColor = true;
             this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // DebuggerWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -85,5 +92,6 @@ namespace R6AutoSplitter
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label fpsLabel;
         private System.Windows.Forms.Button stopButton;
+        private System.Windows.Forms.Timer timer1;
     }
 }

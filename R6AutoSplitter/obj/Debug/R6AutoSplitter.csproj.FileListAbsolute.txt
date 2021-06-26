@@ -19,3 +19,7 @@ C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\bin\Debug\SharpDX.Dire
 C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\bin\Debug\SharpDX.DXGI.pdb
 C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\bin\Debug\SharpDX.DXGI.xml
 C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\obj\Debug\R6AutoSplitter.DebuggerWindow.resources
+C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\obj\Debug\R6AutoSplitter.SettingsWindow.resources
+C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\bin\Debug\Newtonsoft.Json.dll
+C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\bin\Debug\Newtonsoft.Json.xml
+C:\Users\chari\source\repos\R6AutoSplitter\R6AutoSplitter\bin\Debug\DirectN.dll
