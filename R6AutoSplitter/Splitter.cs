@@ -4,14 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Threading;
 using System.IO;
+using Windows.UI.ViewManagement;
+using Windows.UI.Input.Preview.Injection;
+using Windows.System;
+
 namespace R6AutoSplitter
 {
     public class Splitter
     {
+
+        public static void Split(bool pauseAfterSplit, AspectRatioDefinitions.AspectRatio AR)
+        {
+
+        }
+
+        /*
         public static void Split(bool pauseAfterSplit, AspectRatioDefinitions.AspectRatio AR)
         {
             int length = 1;
@@ -20,11 +30,12 @@ namespace R6AutoSplitter
             Graphics gfxScreenshot = Graphics.FromImage(activeScreen);
            
             bool loadOrSkipIconShowing = false;
+            var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
             //This loop will break once the black fade in starts and the loading icon/skip button has dissapeared signalling the start of the thunt/situation
-            int loadingIconPixelPositionX = (int)(Screen.PrimaryScreen.Bounds.Width * AspectRatioDefinitions.LoadingIconPositionX(AR));
-            int loadingIconPixelPositionY = (int)(Screen.PrimaryScreen.Bounds.Height * AspectRatioDefinitions.LoadingIconPositionY(AR));
-            int skipIconPixelPositionX = (int)(Screen.PrimaryScreen.Bounds.Width * AspectRatioDefinitions.SkipIconPositionX(AR));
-            int skipIconPixelPositionY = (int)(Screen.PrimaryScreen.Bounds.Height * AspectRatioDefinitions.SkipIconPositionY(AR));
+            int loadingIconPixelPositionX = (int)(bounds.Width * AspectRatioDefinitions.LoadingIconPositionX(AR));
+            int loadingIconPixelPositionY = (int)(bounds.Height * AspectRatioDefinitions.LoadingIconPositionY(AR));
+            int skipIconPixelPositionX = (int)(bounds.Width * AspectRatioDefinitions.SkipIconPositionX(AR));
+            int skipIconPixelPositionY = (int)(bounds.Height * AspectRatioDefinitions.SkipIconPositionY(AR));
             do
             {
                 //gets a pixel from the r6 loading icon
@@ -42,9 +53,12 @@ namespace R6AutoSplitter
 
             } while (loadOrSkipIconShowing);
 
-
+            InputInjector ij = InputInjector.TryCreate();
+            var PageUp = new InjectedInputKeyboardInfo();
+            PageUp.VirtualKey = (ushort)(VirtualKey.PageUp);
+            ij.InjectKeyboardInput(new[] { PageUp });
             //Splits on livesplit
-            SendKeys.SendWait("{PGUP}");
+            //SendKeys.SendWait("{PGUP}");
 
             //Waites for a second so the fade in can complete so that the pixel we use for checking the end of the thunt is at its max brightness
             Thread.Sleep(1000);
@@ -57,12 +71,12 @@ namespace R6AutoSplitter
             //I have to use the camera because the killfeed icons have to slide in from the right. The chances of you going on camera in the 6 frame window the killfeed is not
             //in its final position is fairly low so this was a good enough solution for me.
 
-            int cameraIconPixelPositionX = (int)(Screen.PrimaryScreen.Bounds.Width * AspectRatioDefinitions.CameraIconPositionX(AR));
-            int cameraIconPixelPositionY = (int)(Screen.PrimaryScreen.Bounds.Height * AspectRatioDefinitions.CameraIconPositionY(AR));
-            int operatorIconPixelPositionX = (int)(Screen.PrimaryScreen.Bounds.Width * AspectRatioDefinitions.OperatorIconPositionX(AR));
-            int operatorIconPixelPositionY = (int)(Screen.PrimaryScreen.Bounds.Height * AspectRatioDefinitions.OperatorIconPositionY(AR));
-            int killFeedPixelPositionX = (int)(Screen.PrimaryScreen.Bounds.Width * AspectRatioDefinitions.KillFeedPositionX(AR));
-            int killFeedPixelPositionY = (int)(Screen.PrimaryScreen.Bounds.Height * AspectRatioDefinitions.KillFeedPositionY(AR));
+            int cameraIconPixelPositionX = (int)(bounds.Width * AspectRatioDefinitions.CameraIconPositionX(AR));
+            int cameraIconPixelPositionY = (int)(bounds.Height * AspectRatioDefinitions.CameraIconPositionY(AR));
+            int operatorIconPixelPositionX = (int)(bounds.Width * AspectRatioDefinitions.OperatorIconPositionX(AR));
+            int operatorIconPixelPositionY = (int)(bounds.Height * AspectRatioDefinitions.OperatorIconPositionY(AR));
+            int killFeedPixelPositionX = (int)(bounds.Width * AspectRatioDefinitions.KillFeedPositionX(AR));
+            int killFeedPixelPositionY = (int)(bounds.Height * AspectRatioDefinitions.KillFeedPositionY(AR));
             do
             {
                 CameraVisible = true;
@@ -89,16 +103,16 @@ namespace R6AutoSplitter
 
             } while (operatorIconVisible || KillFeedVisible || CameraVisible);
             //Splits on livesplit
-            SendKeys.SendWait("{PGUP}");
+            ij.InjectKeyboardInput(new[] { PageUp });
             if (pauseAfterSplit)
             {
                 //shortest delay inbetween the two signals to live split that allows it to work consistently. 263 is the lowest it can be but the pause is not consistent below 300
                 Thread.Sleep(300);
-                SendKeys.SendWait("{END}");
+                //SendKeys.SendWait("{END}");
             }
         }
         
-
+        */
 
     }
 }
