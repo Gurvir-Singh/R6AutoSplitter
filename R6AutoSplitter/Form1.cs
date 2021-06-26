@@ -15,10 +15,11 @@ namespace R6AutoSplitter
 {
     public partial class Form1 : Form
     {
+        private AspectRatioDefinitions.AspectRatio AspectRatio;
         private DebuggerWindow debugViewer;
         private Thread _splitterThread;
         private int _timeToStart = 3;
-        
+        private SettingsWindow settingsWindow = null;
         private bool _running
         {
             get
@@ -36,7 +37,6 @@ namespace R6AutoSplitter
 
         public Form1()
         {
-            
             _splitterThread = new Thread(StartSplitter);
             InitializeComponent();
             Countdown.Text = _timeToStart.ToString();
@@ -74,7 +74,7 @@ namespace R6AutoSplitter
         private void StartSplitter()
         {
             runningText.Text = "currently running";
-            ScreenScrapper.Split(pauseAfterSplitCheckbox.Checked);
+            ScreenScrapper.Split(pauseAfterSplitCheckbox.Checked, AspectRatioDefinitions.AspectRatio.FiveByFour);
             runningText.Visible = false;
             Countdown.Text = _timeToStart.ToString();
             StopButton.Visible = false;
@@ -105,8 +105,12 @@ namespace R6AutoSplitter
 
         private void settingsButton_Click(object sender, EventArgs e)
         {
-            debugViewer = new DebuggerWindow();
-            debugViewer.Show();
+            if (settingsWindow == null)
+            {
+                settingsWindow = new SettingsWindow(this);
+            }
+            settingsWindow.Show();
+            this.Hide();
         }
 
         private void StopButton_Click(object sender, EventArgs e)
