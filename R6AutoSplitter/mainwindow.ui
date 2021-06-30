@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>854</width>
     <height>600</height>
    </rect>
   </property>
@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="captureButton">
@@ -37,7 +37,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Capture</string>
+     <string>Start</string>
     </property>
    </widget>
   </widget>
@@ -46,7 +46,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>854</width>
      <height>20</height>
     </rect>
    </property>
