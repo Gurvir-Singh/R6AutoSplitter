@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include "aspectratiodefinitions.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -18,12 +18,14 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    void Split();
+    void Split(bool pauseAfterSplit, AspectRatioDefinitions::AspectRatio AR);
+    void Debug();
     void delay(int ms);
 private slots:
     void Start();
 
 signals:
     void finished();
+    void R6NotRunning();
 };
 #endif // MAINWINDOW_H

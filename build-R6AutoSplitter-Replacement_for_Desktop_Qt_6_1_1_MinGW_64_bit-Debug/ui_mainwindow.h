@@ -41,7 +41,7 @@ public:
         label->setGeometry(QRect(0, 0, 854, 480));
         captureButton = new QPushButton(centralwidget);
         captureButton->setObjectName(QString::fromUtf8("captureButton"));
-        captureButton->setGeometry(QRect(10, 520, 80, 21));
+        captureButton->setGeometry(QRect(10, 520, 831, 41));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));

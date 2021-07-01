@@ -5,6 +5,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QApplication::setApplicationName("R6AutoSplitter");
     MainWindow w;
     w.show();
     return a.exec();
